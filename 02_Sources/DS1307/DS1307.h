@@ -11,7 +11,7 @@ Historique:
 
 Version	|	Date		|	Changement
 ----------
-00		|	18.06.2013	|	First commit et chargement sur Git	
+00		|	22.06.2013	|	Premier commit et chargement sur Git	
 ----------
 ****************************************************************************************************/
 
