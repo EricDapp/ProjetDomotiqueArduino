@@ -1,18 +1,20 @@
 /****************************************************************************************************
-Nom:				DS1307.cpp
+Name:				DS1307.cpp
 --------------------------------------------------
 Description:		TBW
 --------------------------------------------------
-Auteur:				Eric Dapp
+Author:				Eric Dapp
 --------------------------------------------------
-Date de création:	17.06.2013
+Creation Date:		17.06.2013
 --------------------------------------------------
-Historique:
+History:
 
-Version	|	Date		|	Changement
+Date		|	Change
 ----------
-00		|	22.06.2013	|	Premier commit et chargement sur Git	
+22.06.2013	|	First commit and upload into Git	
 ----------
+24.06.2013	|	- Change the language to english
+				- Change the constructor to take the "Serial" as input
 ****************************************************************************************************/
 
 
@@ -28,21 +30,37 @@ Version	|	Date		|	Changement
 #include "DS1307.h" 
 
 
-DS1307 RTC = DS1307();
-
-
 /******************************
 	Public
 ******************************/
-	// Constructeur
-DS1307::DS1307()
+	// Constructor
+DS1307::DS1307 (Print &_serial)
 {
  
 	Wire.begin();
+	serial = &_serial;
 }
 
-	// Vérifie que l'horloge est présente
-uint8_t DS1307::is_Present(void)         	
+
+void DS1307::init ()
+{
+		// Check if the RTC is present
+	if (is_Present ()) {
+		
+		serial -> println ("RTC found...");
+	}
+	else {
+		serial -> println ("!!! Error: RTC not found !!!");
+	}
+}
+
+
+/******************************
+	Private
+******************************/
+
+	// Check if the RTC is present
+uint8_t DS1307::is_Present (void)         	
 {
   
 	Wire.beginTransmission (DS1307_Address);
@@ -54,8 +72,3 @@ uint8_t DS1307::is_Present(void)
 	}
 	return 0;
 }
-
-/******************************
-	Définie objet
-******************************/
-class DS1307 DS1307;

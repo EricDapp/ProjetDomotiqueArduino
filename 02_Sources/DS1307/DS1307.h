@@ -1,18 +1,20 @@
 /****************************************************************************************************
-Nom:				DS1307.h
+Name:				DS1307.h
 --------------------------------------------------
 Description:		TBW
 --------------------------------------------------
-Auteur:				Eric Dapp
+Author:				Eric Dapp
 --------------------------------------------------
-Date de création:	17.06.2013
+Creation Date:		17.06.2013
 --------------------------------------------------
-Historique:
+History:
 
-Version	|	Date		|	Changement
+Date		|	Changement
 ----------
-00		|	22.06.2013	|	Premier commit et chargement sur Git	
+22.06.2013	|	First commit and upload into Git	
 ----------
+24.06.2013	|	- Change the language to english
+				- Change the constructor to take the "Serial" as input
 ****************************************************************************************************/
 
 
@@ -26,21 +28,27 @@ Version	|	Date		|	Changement
 /******************************
 	Include
 ******************************/
-//#include "WProgram.h"
 #include <Wire.h>
 
+
 /******************************
-	Description de la librarie
+	Library Description
 ******************************/
 class DS1307 {
     
 	public:
 	
-		DS1307();					// Constructeur 
+		DS1307(Print &_serial);	// Constructor 
 		
-		uint8_t is_Present (void);	// Verifie la présence de l'horloge		
+		void init(void);			// Initialization function
+		
+	private:
+			// Attributs
+		Print* serial;
+			
+			// Fonctions
+		uint8_t is_Present(void);	// Check that the RTS is present
 };
 
-	extern DS1307 RTC;
 #endif
 
