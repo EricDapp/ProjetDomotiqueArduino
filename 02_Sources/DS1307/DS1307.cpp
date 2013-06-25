@@ -72,3 +72,85 @@ uint8_t DS1307::is_Present (void)
 	}
 	return 0;
 }
+
+
+	// Get Second
+uint8_t DS1307::get_Second () {
+	
+	return second;
+}		
+
+	// Set Second
+void set_Second () {
+	
+	
+}
+
+	// Get Minute
+uint8_t get_Minute () {
+	
+	return minute;
+}	
+
+	// Set Minute
+void set_Minute () {
+	
+}
+	// Get Hour
+uint8_t get_Hour (){
+	
+	return hour;
+}
+
+	// Set Hour
+void set_Hour (){
+	
+}
+		
+	// Get Day Of Week
+uint8_t get_Day_Of_Week	() {
+	
+	return day_Of_Week;
+}
+
+	// Set Day Of Week
+void set_Day_Of_Week () {
+	
+	
+}
+	
+	// Get Day
+uint8_t get_Day () {
+	
+	return day;
+}
+
+	// Set Day
+void set_Day () {
+	
+	
+}
+
+	// Get Month
+uint8_t get_Month () {
+	
+	return month;
+}
+
+	// Set Month
+void set_Month () {
+	
+	
+}
+	
+	// Get Year
+uint16_t get_Year () {
+	
+	return year;
+}	
+
+	// Set Year
+uint16_t set_Year () {
+	
+	
+}
