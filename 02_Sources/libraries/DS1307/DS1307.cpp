@@ -21,7 +21,8 @@ Date		|	Change
 /******************************
 	Define
 ******************************/
-#define DS1307_Address 	0x68
+#define	_DS1307_Address 	0x68
+#define _Oscillator_Address	0x00
 
 
 /******************************
@@ -47,11 +48,15 @@ void DS1307::init ()
 		// Check if the RTC is present
 	if (is_Present ()) {
 		
-		serial -> println ("RTC found...");
+		serial -> println ("RTC: Found...");
 	}
 	else {
-		serial -> println ("!!! Error: RTC not found !!!");
+		serial -> println ("RTC: NOT found !!!");
 	}
+	
+	serial -> println ("RTC: Start...");
+	start_Clock ();
+	
 }
 
 
@@ -63,8 +68,8 @@ void DS1307::init ()
 uint8_t DS1307::is_Present (void)         	
 {
   
-	Wire.beginTransmission (DS1307_Address);
-	Wire.write ((uint8_t)0x00);
+	Wire.beginTransmission (_DS1307_Address);
+	Wire.write ((uint8_t)_Oscillator_Address);
 	
 	if (Wire.endTransmission () == 0) {
 	
@@ -74,8 +79,37 @@ uint8_t DS1307::is_Present (void)
 }
 
 
+void DS1307::start_Clock (void)        			// Set the ClockHalt bit low to start the RTC
+{
+  Wire.beginTransmission (_DS1307_Address);
+  Wire.write ((uint8_t)_Oscillator_Address);                 	// Register 0x00 holds the oscillator start/stop bit
+  Wire.endTransmission ();
+  Wire.requestFrom (_DS1307_Address, 1);
+  second = Wire.read () & 0x7f;       			// Save actual seconds and AND sec with bit 7 (sart/stop bit) = clock started
+  Wire.beginTransmission (_DS1307_Address);
+  Wire.write ((uint8_t)_Oscillator_Address);
+  Wire.write ((uint8_t)second);              	// Write seconds back and start the clock
+  Wire.endTransmission ();
+}
+
+void DS1307::stop_Clock (void)         			// Set the ClockHalt bit high to stop the RTC
+{
+  Wire.beginTransmission (_DS1307_Address);
+  Wire.write ((uint8_t)_Oscillator_Address);                 	// Register 0x00 holds the oscillator start/stop bit
+  Wire.endTransmission ();
+  Wire.requestFrom (_DS1307_Address, 1);
+  second = Wire.read() | 0x80;       			// Save actual seconds and OR sec with bit 7 (sart/stop bit) = clock stopped
+  Wire.beginTransmission (_DS1307_Address);
+  Wire.write ((uint8_t)_Oscillator_Address);
+  Wire.write ((uint8_t)second);                 // Write seconds back and stop the clock
+  Wire.endTransmission ();
+}
+
+
+
+
 	// Get Second
-uint8_t DS1307::get_Second () {
+/*uint8_t DS1307::get_Second () {
 	
 	return second;
 }		
@@ -153,4 +187,4 @@ uint16_t get_Year () {
 uint16_t set_Year () {
 	
 	
-}
+}*/

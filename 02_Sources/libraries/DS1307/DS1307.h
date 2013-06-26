@@ -54,12 +54,14 @@ class DS1307 {
     	uint8_t 	day_Of_Week;		// Day of Week, 0 = sunday - TBC
     	uint8_t 	day;
     	uint8_t 	month;
-    	uint16_t 	year
+    	uint16_t 	year;
 			
 			// Fonctions
-		uint8_t 	is_Present(void);	// Check that the RTS is present
+		uint8_t 	is_Present	(void);	// Check that the RTS is present
+		void 		start_Clock	(void);	// Start the clock
+		void 		stop_Clock	(void);	// Stop the clock
 		
-		uint8_t 	get_Second 	();		// Get/Set Second
+		/*uint8_t 	get_Second 	();		// Get/Set Second
 		void 		set_Second 	();
 		
 		uint8_t 	get_Minute 	();		// Get/Set Minute
@@ -78,7 +80,7 @@ class DS1307 {
 		void 		set_Month 	();
 		
 		uint16_t	get_Year	();		// Get/Set Year
-		uint16_t	set_Year	();
+		uint16_t	set_Year	();*/
 };
 
 #endif
